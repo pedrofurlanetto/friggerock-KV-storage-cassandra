@@ -1,0 +1,1 @@
+# friggerock-KV-storage-cassandra
