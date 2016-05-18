@@ -1,3 +1,5 @@
+package com.cassandra.example;
+
 import com.datastax.driver.core.*;
 
 public class SimpleClient {
