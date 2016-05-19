@@ -1,68 +1,50 @@
+/*
+ * (C) Copyright 2016 HP Development Company, L.P.
+ */
+
 package com.cassandra.example.spring;
 
+import org.springframework.data.cassandra.mapping.Column;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 
-import java.net.URL;
 import java.util.UUID;
 
 @Table
 public class Publication {
-
     @PrimaryKey
-    private UUID accountId;
-    @PrimaryKey
-    private UUID ownerId;
+    private PublicationKey publicationKey;
 
-    private UUID documentId;
-    private UUID publicationId;
+    @Column
     private int ttl;
-    private URL link;
+    @Column
+    private String link;
+    @Column
     private UUID secret;
+    @Column
     private String authCallback;
 
-    public Publication(UUID accountId, UUID ownerId, UUID documentId, UUID publicationId,
-                       int ttl, URL link, UUID secret, String authCallback) {
-        this.accountId = accountId;
-        this.ownerId = ownerId;
-        this.documentId = documentId;
-        this.publicationId = publicationId;
+    public Publication() {
+    }
+
+    public Publication(PublicationKey publicationKey) {
+        this.publicationKey = publicationKey;
+    }
+
+    public Publication(PublicationKey publicationKey, int ttl, String link, UUID secret, String authCallback) {
+        this.publicationKey = publicationKey;
         this.ttl = ttl;
         this.link = link;
         this.secret = secret;
         this.authCallback = authCallback;
     }
 
-    public UUID getAccountId() {
-        return accountId;
+    public PublicationKey getPublicationKey() {
+        return publicationKey;
     }
 
-    public void setAccountId(UUID accountId) {
-        this.accountId = accountId;
-    }
-
-    public UUID getOwnerId() {
-        return ownerId;
-    }
-
-    public void setOwnerId(UUID ownerId) {
-        this.ownerId = ownerId;
-    }
-
-    public UUID getDocumentId() {
-        return documentId;
-    }
-
-    public void setDocumentId(UUID documentId) {
-        this.documentId = documentId;
-    }
-
-    public UUID getPublicationId() {
-        return publicationId;
-    }
-
-    public void setPublicationId(UUID publicationId) {
-        this.publicationId = publicationId;
+    public void setPublicationKey(PublicationKey publicationKey) {
+        this.publicationKey = publicationKey;
     }
 
     public int getTtl() {
@@ -73,11 +55,11 @@ public class Publication {
         this.ttl = ttl;
     }
 
-    public URL getLink() {
+    public String getLink() {
         return link;
     }
 
-    public void setLink(URL link) {
+    public void setLink(String link) {
         this.link = link;
     }
 
@@ -99,9 +81,7 @@ public class Publication {
 
     @Override
     public String toString() {
-        return "Publication [accountId=" + accountId + ", ownerId=" + ownerId  + ", documentId=" + documentId
-                + ", publicationId=" + publicationId + ", ttl=" + ttl  + ", link=" + link
+        return "PublicationKey [ttl=" + ttl + ", link=" + link
                 + ", secret=" + secret + ", authCallback=" + authCallback + "]";
     }
-
 }
