@@ -2,12 +2,11 @@
  * (C) Copyright 2016 HP Development Company, L.P.
  */
 
-package com.cassandra.example.spring;
+package com.cassandra.example.spring.composite;
 
 import static com.datastax.driver.core.querybuilder.QueryBuilder.eq;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.select;
-import static java.lang.Thread.*;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static java.lang.Thread.sleep;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -51,8 +50,6 @@ public class CassandraAppTest {
 
     private static CassandraApp cassandraApp = new CassandraApp();
 
-
-
     @BeforeClass
     public static void setup() {
         cassandraApp.connect(node, keyspace);
@@ -60,7 +57,7 @@ public class CassandraAppTest {
     }
 
     @AfterClass
-    public static void teadown() {
+    public static void teardown() {
         cassandraApp.truncate(table);
         cassandraApp.dropSchema(table);
         cassandraApp.dropKeyspace(keyspace);
@@ -69,7 +66,7 @@ public class CassandraAppTest {
 
     @Test
     public void createPublicationWithTTL_shouldCreatePublicationWithTTLandRemoveWhenExpired() throws InterruptedException {
-        cassandraApp.createPublicationWithTTL(accountId_1, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithTtl(accountId_1, ownerId_1, documentId_1,
                 publicationId_1, ttl_1, link_1, secret_1, authCallback_1);
 
         Select select = select().all().from(table);
@@ -90,7 +87,7 @@ public class CassandraAppTest {
 
     @Test
     public void createPublicationWithoutTTL_shouldCreatePublicationWithTTLEqualToMinusOne() throws InterruptedException {
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_1,
                 publicationId_2, link_1, secret_1, authCallback_1);
 
         Select select = select().all().from(table);
@@ -107,7 +104,7 @@ public class CassandraAppTest {
 
     @Test
     public void revokePublication_shouldDeleteTheEntry() {
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_1,
                 publicationId_1, link_1, secret_1, authCallback_1);
 
         Select select = select().all().from(table);
@@ -129,15 +126,15 @@ public class CassandraAppTest {
 
     @Test
     public void getPublicationsFromUser_shouldRetrieveAllPublicationsForGivenUser() {
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_1,
                 publicationId_1, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_1,
                 publicationId_2, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_2,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_2,
                 publicationId_1, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_2, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_2, documentId_1,
                 publicationId_1, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_2, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_2, ownerId_1, documentId_1,
                 publicationId_1, link_1, secret_1, authCallback_1);
 
         List<Publication> publicationList = cassandraApp.getPublicationsFromUser(accountId_1, ownerId_1);
@@ -152,15 +149,15 @@ public class CassandraAppTest {
 
     @Test
     public void getPublicationsFromAdmin_shouldRetrieveAllPublicationsForGivenUser() {
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_1,
                 publicationId_1, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_1,
                 publicationId_2, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_1, documentId_2,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_1, documentId_2,
                 publicationId_1, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_1, ownerId_2, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_1, ownerId_2, documentId_1,
                 publicationId_1, link_1, secret_1, authCallback_1);
-        cassandraApp.createPublicationWithoutTTL(accountId_2, ownerId_1, documentId_1,
+        cassandraApp.createPublicationWithoutTtl(accountId_2, ownerId_1, documentId_1,
                 publicationId_1, link_1, secret_1, authCallback_1);
 
         List<Publication> publicationList = cassandraApp.getPublicationsFromAdmin(accountId_1);

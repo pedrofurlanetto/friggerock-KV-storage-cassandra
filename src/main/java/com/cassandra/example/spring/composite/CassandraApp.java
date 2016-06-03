@@ -2,7 +2,7 @@
  * (C) Copyright 2016 HP Development Company, L.P.
  */
 
-package com.cassandra.example.spring;
+package com.cassandra.example.spring.composite;
 
 import static com.datastax.driver.core.Cluster.builder;
 import static com.datastax.driver.core.querybuilder.QueryBuilder.eq;
@@ -101,7 +101,7 @@ public class CassandraApp {
         session.execute(schema);
     }
 
-    public void createPublicationWithTTL(UUID accountId, UUID ownerId, UUID documentId, UUID publicationId,
+    public void createPublicationWithTtl(UUID accountId, UUID ownerId, UUID documentId, UUID publicationId,
                                   int ttl, String link, UUID secret, String authCallback) {
         WriteOptions options = new WriteOptions();
         options.setTtl(ttl);
@@ -109,7 +109,7 @@ public class CassandraApp {
                             ttl, link, secret, authCallback), options);
     }
 
-    public void createPublicationWithoutTTL(UUID accountId, UUID ownerId, UUID documentId, UUID publicationId,
+    public void createPublicationWithoutTtl(UUID accountId, UUID ownerId, UUID documentId, UUID publicationId,
                                             String link, UUID secret, String authCallback) {
         cassandraOps.insert(new Publication(new PublicationKey(accountId, ownerId, documentId, publicationId),
                             -1, link, secret, authCallback));

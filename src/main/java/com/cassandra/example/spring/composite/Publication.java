@@ -2,7 +2,7 @@
  * (C) Copyright 2016 HP Development Company, L.P.
  */
 
-package com.cassandra.example.spring;
+package com.cassandra.example.spring.composite;
 
 import org.springframework.data.cassandra.mapping.Column;
 import org.springframework.data.cassandra.mapping.PrimaryKey;

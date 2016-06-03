@@ -2,7 +2,7 @@
  * (C) Copyright 2016 HP Development Company, L.P.
  */
 
-package com.cassandra.example.spring;
+package com.cassandra.example.spring.composite;
 
 import org.springframework.cassandra.core.PrimaryKeyType;
 import org.springframework.data.cassandra.mapping.PrimaryKeyClass;
@@ -65,7 +65,7 @@ public class PublicationKey implements Serializable {
     @Override
     public String toString() {
         return "PublicationKey [accountId=" + accountId + ", ownerId=" + ownerId
-                + ", documentId=" + ownerId + ", publicationId=" + ownerId +"]";
+                + ", documentId=" + ownerId + ", publicationId=" + ownerId + "]";
     }
 
 }
